@@ -1,11 +1,12 @@
-import react from "@vitejs/plugin-react-swc";
-import type { UserConfig } from "vite";
-import { defineConfig, ModuleNode } from "vite";
-import eslintPlugin from "vite-plugin-eslint";
-import { createHtmlPlugin } from "vite-plugin-html";
-import tsconfigPaths from "vite-tsconfig-paths";
+import react from '@vitejs/plugin-react-swc'
+import type { UserConfig } from 'vite'
+import { defineConfig, ModuleNode } from 'vite'
+import eslintPlugin from 'vite-plugin-eslint'
+import { createHtmlPlugin } from 'vite-plugin-html'
+import tsconfigPaths from 'vite-tsconfig-paths'
+import svgr from 'vite-plugin-svgr'
 
-const DEV_PORT = 9000;
+const DEV_PORT = 9000
 
 const config: UserConfig = {
   plugins: [
@@ -13,19 +14,31 @@ const config: UserConfig = {
     tsconfigPaths(),
     createHtmlPlugin({
       minify: true,
-      template: "/src/index.html",
-      entry: "/src/main.tsx",
+      template: '/src/index.html',
+      entry: '/src/main.tsx',
     }),
     eslintPlugin({
       cache: false,
-      include: "./src/**/*.+(js|jsx|ts|tsx)",
+      include: './src/**/*.+(js|jsx|ts|tsx)',
+    }),
+    svgr({
+      svgrOptions: {
+        svgoConfig: {
+          plugins: [
+            {
+              name: 'removeViewBox',
+              active: false,
+            },
+          ],
+        },
+      },
     }),
   ],
   css: {
     devSourcemap: true,
   },
   build: {
-    outDir: "build",
+    outDir: 'build',
     sourcemap: true,
     emptyOutDir: true,
   },
@@ -37,7 +50,7 @@ const config: UserConfig = {
     port: DEV_PORT,
     open: true,
   },
-  logLevel: "error",
-};
+  logLevel: 'error',
+}
 
-export default defineConfig(config);
+export default defineConfig(config)

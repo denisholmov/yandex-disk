@@ -1,22 +1,24 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
+
+import { CLIENT_ID, REDIRECT_URI } from 'env'
+import { useLocalStorage } from 'usehooks-ts'
 
 export const useYandexAuth = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [accessToken, setAccessToken] = useLocalStorage<string | null>('accessToken', null)
 
   const login = () => {
-    const yandexAuthUrl =
-      'https://oauth.yandex.ru/authorize?response_type=token&client_id=1b3fc8961e684428b0d000a2c6407a6a&redirect_uri=http://localhost:9000/'
+    const yandexAuthUrl = `https://oauth.yandex.ru/authorize?response_type=token&client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}`
     window.location.href = yandexAuthUrl
   }
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.hash.slice(1))
-    const accessToken = params.get('access_token')
 
-    if (accessToken) {
-      setIsLoggedIn(true)
+    if (params.get('access_token')) {
+      setAccessToken(params.get('access_token'))
+      window.location.href = '/'
     }
   }, [])
 
-  return { login, isLoggedIn }
+  return { login, isLoggedIn: !!accessToken }
 }
