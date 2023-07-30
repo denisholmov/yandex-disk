@@ -1,8 +1,11 @@
 {
   "name": "test-yandex",
   "private": true,
+  "repository": "https://github.com/denisholmov/yandex-disk",
   "scripts": {
-    "dev": "kill-port 9000 && env-cmd -f .env.development vite"
+    "dev": "kill-port 9000 && env-cmd -f .env.development vite",
+    "build": "env-cmd -f .env.production vite build",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "axios": "^1.4.0",
@@ -33,6 +36,7 @@
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-react": "^7.33.0",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "gh-pages": "^5.0.0",
     "kill-port": "^2.0.1",
     "prettier": "^3.0.0",
     "sass": "^1.64.1",
