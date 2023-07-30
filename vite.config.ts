@@ -2,23 +2,16 @@ import react from '@vitejs/plugin-react-swc'
 import type { UserConfig } from 'vite'
 import { defineConfig, ModuleNode } from 'vite'
 import eslintPlugin from 'vite-plugin-eslint'
-import { createHtmlPlugin } from 'vite-plugin-html'
 import tsconfigPaths from 'vite-tsconfig-paths'
 import svgr from 'vite-plugin-svgr'
-import { BASE_PUTH } from 'env'
 
 const DEV_PORT = 9000
 
 const config: UserConfig = {
-  base: BASE_PUTH,
+  base: process.env.BASE_PATH,
   plugins: [
     react(),
     tsconfigPaths(),
-    createHtmlPlugin({
-      minify: true,
-      template: '/src/index.html',
-      entry: '/src/main.tsx',
-    }),
     eslintPlugin({
       cache: false,
       include: './src/**/*.+(js|jsx|ts|tsx)',
