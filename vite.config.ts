@@ -8,7 +8,7 @@ import svgr from 'vite-plugin-svgr'
 const DEV_PORT = 9000
 
 const config: UserConfig = {
-  base: process.env.BASE_PATH,
+  base: process.env.VITE_BASE_PATH,
   plugins: [
     react(),
     tsconfigPaths(),
